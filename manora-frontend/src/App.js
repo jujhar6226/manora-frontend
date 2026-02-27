@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = "https://manora-backend.onrender.com";
+
 function App() {
   const [isRegistering, setIsRegistering] = useState(false);
 
@@ -21,7 +23,7 @@ function App() {
 
   const handleRegister = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post(`${API_URL}/api/auth/register`, {
         name,
         email,
         password,
@@ -40,7 +42,7 @@ function App() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_URL}/api/auth/login`,
         { email, password }
       );
 
@@ -66,7 +68,7 @@ function App() {
     const token = localStorage.getItem("token");
 
     const res = await axios.get(
-      `http://localhost:5000/api/notes/${user.id}`,
+      `${API_URL}/api/notes/${user.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,7 +90,7 @@ function App() {
 
     if (editingId) {
       await axios.put(
-        `http://localhost:5000/api/notes/${editingId}`,
+        `${API_URL}/api/notes/${editingId}`,
         { title, content },
         {
           headers: {
@@ -98,7 +100,7 @@ function App() {
       );
     } else {
       await axios.post(
-        "http://localhost:5000/api/notes",
+        `${API_URL}/api/notes`,
         {
           user_id: user.id,
           title,
@@ -123,7 +125,7 @@ function App() {
     const token = localStorage.getItem("token");
 
     await axios.delete(
-      `http://localhost:5000/api/notes/${id}`,
+      `${API_URL}/api/notes/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -151,25 +153,21 @@ function App() {
 
   if (!user) {
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#f4f7fb",
-          fontFamily: "Segoe UI, sans-serif",
-        }}
-      >
-        <div
-          style={{
-            background: "white",
-            padding: 30,
-            borderRadius: 12,
-            boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-            width: 350,
-          }}
-        >
+      <div style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f4f7fb",
+        fontFamily: "Segoe UI, sans-serif",
+      }}>
+        <div style={{
+          background: "white",
+          padding: 30,
+          borderRadius: 12,
+          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+          width: 350,
+        }}>
           <h2 style={{ textAlign: "center" }}>Manora</h2>
 
           {isRegistering ? (
@@ -233,7 +231,6 @@ function App() {
 
   return (
     <div style={{ background: "#f3f5f9", minHeight: "100vh", padding: 30 }}>
-
       <div style={{
         background: "white",
         padding: "15px 25px",
