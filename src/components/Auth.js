@@ -13,6 +13,26 @@ function Auth({
   handleRegister,
   message
 }) {
+  const inputStyle = {
+    width: "100%",
+    marginBottom: 12,
+    padding: 10,
+    borderRadius: 6,
+    border: "1px solid #ccc",
+    fontSize: 14
+  };
+
+  const buttonStyle = {
+    width: "100%",
+    background: "#4a6cf7",
+    color: "white",
+    border: "none",
+    padding: 10,
+    borderRadius: 6,
+    cursor: "pointer",
+    fontWeight: "500"
+  };
+
   return (
     <div
       style={{
@@ -30,38 +50,44 @@ function Auth({
           padding: 30,
           borderRadius: 12,
           boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-          width: 350,
+          width: 380,
+          maxWidth: "90%",
         }}
       >
-        <h2 style={{ textAlign: "center" }}>Manora</h2>
+        <h2 style={{ textAlign: "center", marginBottom: 10 }}>Manora</h2>
 
         {isRegistering ? (
           <>
-            <h3>Register</h3>
+            <h3 style={{ marginBottom: 15 }}>Register</h3>
+
             <input
-              style={{ width: "100%", marginBottom: 10, padding: 8 }}
+              style={inputStyle}
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+
             <input
-              style={{ width: "100%", marginBottom: 10, padding: 8 }}
+              style={inputStyle}
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+
             <input
-              style={{ width: "100%", marginBottom: 10, padding: 8 }}
+              style={inputStyle}
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button style={{ width: "100%" }} onClick={handleRegister}>
+
+            <button style={buttonStyle} onClick={handleRegister}>
               Register
             </button>
+
             <p
-              style={{ cursor: "pointer", marginTop: 10 }}
+              style={{ cursor: "pointer", marginTop: 12, fontSize: 14 }}
               onClick={() => setIsRegistering(false)}
             >
               Already have account? Login
@@ -69,25 +95,29 @@ function Auth({
           </>
         ) : (
           <>
-            <h3>Login</h3>
+            <h3 style={{ marginBottom: 15 }}>Login</h3>
+
             <input
-              style={{ width: "100%", marginBottom: 10, padding: 8 }}
+              style={inputStyle}
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+
             <input
-              style={{ width: "100%", marginBottom: 10, padding: 8 }}
+              style={inputStyle}
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button style={{ width: "100%" }} onClick={handleLogin}>
+
+            <button style={buttonStyle} onClick={handleLogin}>
               Login
             </button>
+
             <p
-              style={{ cursor: "pointer", marginTop: 10 }}
+              style={{ cursor: "pointer", marginTop: 12, fontSize: 14 }}
               onClick={() => setIsRegistering(true)}
             >
               Don't have account? Register
@@ -95,7 +125,11 @@ function Auth({
           </>
         )}
 
-        <p style={{ color: "red" }}>{message}</p>
+        {message && (
+          <p style={{ color: "red", marginTop: 10, fontSize: 14 }}>
+            {message}
+          </p>
+        )}
       </div>
     </div>
   );
