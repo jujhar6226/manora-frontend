@@ -27,10 +27,19 @@ function Auth({
     background: "#4a6cf7",
     color: "white",
     border: "none",
-    padding: 10,
+    padding: 12,
     borderRadius: 6,
     cursor: "pointer",
-    fontWeight: "500"
+    fontWeight: "500",
+    marginTop: 5
+  };
+
+  const linkStyle = {
+    cursor: "pointer",
+    marginTop: 12,
+    fontSize: 14,
+    color: "#4a6cf7",
+    textAlign: "center"
   };
 
   return (
@@ -87,7 +96,7 @@ function Auth({
             </button>
 
             <p
-              style={{ cursor: "pointer", marginTop: 12, fontSize: 14 }}
+              style={linkStyle}
               onClick={() => setIsRegistering(false)}
             >
               Already have account? Login
@@ -117,7 +126,7 @@ function Auth({
             </button>
 
             <p
-              style={{ cursor: "pointer", marginTop: 12, fontSize: 14 }}
+              style={linkStyle}
               onClick={() => setIsRegistering(true)}
             >
               Don't have account? Register
@@ -126,7 +135,7 @@ function Auth({
         )}
 
         {message && (
-          <p style={{ color: "red", marginTop: 10, fontSize: 14 }}>
+          <p style={{ color: "red", marginTop: 10, fontSize: 14, textAlign: "center" }}>
             {message}
           </p>
         )}
