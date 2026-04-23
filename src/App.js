@@ -1,3 +1,6 @@
+// Main application component
+// Handles authentication state, API calls, and passes data to child components
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NoteCard from "./components/NoteCard";
@@ -22,7 +25,7 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  // ✅ AUTO LOGIN (fix refresh logout)
+  //// Restore user session from localStorage after page refresh
   useEffect(() => {
     const token = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
@@ -49,6 +52,7 @@ function App() {
     }
   };
 
+  // Sends login request to backend and stores JWT + user in localStorage
   const handleLogin = async () => {
     try {
       const response = await axios.post(
@@ -76,6 +80,8 @@ function App() {
     setNotes([]);
   };
 
+
+  // Fetch notes for logged-in user using JWT token
   const loadNotes = async () => {
     const token = localStorage.getItem("token");
     const res = await axios.get(`${API_URL}/api/notes/${user.id}`, {
@@ -88,6 +94,8 @@ function App() {
     if (user) loadNotes();
   }, [user]);
 
+
+  // Handles both creating a new note and updating an existing note
   const handleAddOrUpdate = async () => {
     if (!title || !content) return;
 

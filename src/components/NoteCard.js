@@ -1,3 +1,4 @@
+// Reusable component to display a single note
 import React from "react";
 
 function NoteCard({ note, onEdit, onDelete }) {
