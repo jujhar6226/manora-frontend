@@ -19,7 +19,8 @@ function Auth({
     padding: 10,
     borderRadius: 6,
     border: "1px solid #ccc",
-    fontSize: 14
+    fontSize: 14,
+    boxSizing: "border-box" // ✅ FIX
   };
 
   const buttonStyle = {
@@ -31,7 +32,8 @@ function Auth({
     borderRadius: 6,
     cursor: "pointer",
     fontWeight: "500",
-    marginTop: 5
+    marginTop: 8,
+    boxSizing: "border-box" // ✅ FIX
   };
 
   const linkStyle = {
@@ -39,7 +41,8 @@ function Auth({
     marginTop: 12,
     fontSize: 14,
     color: "#4a6cf7",
-    textAlign: "center"
+    textAlign: "center",
+    display: "block" // ✅ ensures proper centering
   };
 
   return (
@@ -61,6 +64,7 @@ function Auth({
           boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
           width: 380,
           maxWidth: "90%",
+          boxSizing: "border-box" // ✅ FIX
         }}
       >
         <h2 style={{ textAlign: "center", marginBottom: 10 }}>Manora</h2>
