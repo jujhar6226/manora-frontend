@@ -22,6 +22,16 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
+  // ✅ AUTO LOGIN (fix refresh logout)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
+
+    if (token && savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
   const handleRegister = async () => {
     try {
       await axios.post(`${API_URL}/api/auth/register`, {
@@ -45,8 +55,13 @@ function App() {
         `${API_URL}/api/auth/login`,
         { email, password }
       );
+
       const { user, token } = response.data;
+
+      // ✅ store both
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
       setUser(user);
       setMessage("");
     } catch {
@@ -56,6 +71,7 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user"); // ✅ important
     setUser(null);
     setNotes([]);
   };
@@ -74,20 +90,29 @@ function App() {
 
   const handleAddOrUpdate = async () => {
     if (!title || !content) return;
+
     const token = localStorage.getItem("token");
 
     if (editingId) {
-      await axios.put(`${API_URL}/api/notes/${editingId}`, { title, content }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        `${API_URL}/api/notes/${editingId}`,
+        { title, content },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
     } else {
-      await axios.post(`${API_URL}/api/notes`, {
-        user_id: user.id,
-        title,
-        content,
-      }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post(
+        `${API_URL}/api/notes`,
+        {
+          user_id: user.id,
+          title,
+          content,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
     }
 
     setTitle("");
@@ -99,9 +124,11 @@ function App() {
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
+
     await axios.delete(`${API_URL}/api/notes/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     loadNotes();
   };
 
